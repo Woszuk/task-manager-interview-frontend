@@ -1,13 +1,12 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import { Task } from "src/types/task";
-import { FormatDate } from "src/utils/format-date";
+import { formatDate } from "src/utils/format-date";
 
 type TaskCardProps = {
   task: Task;
 };
 
 const TaskCard = ({ task }: TaskCardProps) => {
-  const { dateTime } = new FormatDate();
   return (
     <Card
       sx={{
@@ -29,11 +28,11 @@ const TaskCard = ({ task }: TaskCardProps) => {
           variant="caption"
           sx={{ position: "absolute", bottom: 0, left: "10px" }}
         >
-          {dateTime(task.createdAt)}
+          {formatDate(task.createdAt)}
         </Typography>
         {task.dueDate && (
           <Typography variant="caption">
-            Due: {dateTime(task.dueDate)}
+            Due: {formatDate(task.dueDate)}
           </Typography>
         )}
       </CardContent>

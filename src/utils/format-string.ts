@@ -1,18 +1,12 @@
-export class FormatString {
-  private word: string = "";
+export const capitalize = (word: string) => {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase();
+};
 
-  capitalize(label: string) {
-    this.word =
-      label.charAt(0).toUpperCase() + label.slice(1).toLocaleLowerCase();
-    return this;
-  }
+export const removeUnderscore = (text: string) => {
+  return text.replace(/_/g, " ");
+};
 
-  removeUnderscore(label?: string) {
-    this.word = (label ?? this.word).replace("_", " ");
-    return this;
-  }
-
-  get getResult() {
-    return this.word;
-  }
-}
+export const formatText = (text: string) => {
+  const cleanedText = removeUnderscore(text);
+  return capitalize(cleanedText);
+};
