@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import client from "src/api/graphql-client";
-import { CREATE_TASK, UPDATE_TASK } from "src/api/mutation";
+import { CREATE_TASK, DELETE_TASK, UPDATE_TASK } from "src/api/mutation";
 import { GET_TASK, GET_TASKS } from "src/api/queries";
 import { TaskInput, Task } from "src/types/task";
 
@@ -41,6 +41,16 @@ export const useUpdateTask = () => {
     onSuccess: (data) => {
       const { updateTask } = data as { updateTask: Task };
       queryClient.invalidateQueries({ queryKey: [`task${updateTask.id}`] });
+    },
+  });
+};
+
+export const useDeleteTask = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => client.request(DELETE_TASK, { id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`tasks`] });
     },
   });
 };
