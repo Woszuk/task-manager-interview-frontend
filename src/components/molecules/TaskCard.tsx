@@ -1,6 +1,7 @@
-import { Card, CardContent, Typography } from "@mui/material";
-import { Task } from "src/types/task";
-import { formatDate } from "src/utils/format-date";
+import { Card, CardActions, CardContent, Typography } from "@mui/material";
+import { Link } from "react-router";
+import { STATUS, Task } from "src/types/task";
+import { formatDate, isFutureDate } from "src/utils/format-date";
 
 type TaskCardProps = {
   task: Task;
@@ -8,36 +9,58 @@ type TaskCardProps = {
 
 const TaskCard = ({ task }: TaskCardProps) => {
   return (
-    <Card
-      sx={{
-        position: "relative",
-        cursor: "pointer",
-        marginBottom: 2,
-        p: 2,
-        width: "100%",
-        borderRadius: "10px",
-        ":hover": { bgcolor: "#e6e6e6" },
-      }}
-    >
-      <CardContent>
-        <Typography variant="h6">{task.title}</Typography>
-        <Typography variant="body2" color="textSecondary">
-          {task.description}
-        </Typography>
-        <Typography
-          variant="caption"
-          sx={{ position: "absolute", bottom: 0, left: "10px" }}
-        >
-          {formatDate(task.createdAt)}
-        </Typography>
-        {task.dueDate && (
+    <Link to={`/${task.id}`} style={{ textDecoration: "none" }}>
+      <Card
+        sx={{
+          cursor: "pointer",
+          marginBottom: 2,
+          width: "max-content",
+          borderRadius: "10px",
+          ":hover": {
+            bgcolor: getHoverColor(task),
+          },
+          textAlign: "center",
+          bgcolor: getTaskBgColor(task),
+        }}
+      >
+        <CardContent>
+          <Typography variant="h5">{task.title}</Typography>
+          {task.dueDate && (
+            <Typography sx={{ fontSize: "13px" }}>
+              Due: {formatDate(task.dueDate)}
+            </Typography>
+          )}
+        </CardContent>
+        <CardActions>
           <Typography variant="caption">
-            Due: {formatDate(task.dueDate)}
+            Created at: {formatDate(task.createdAt)}
           </Typography>
-        )}
-      </CardContent>
-    </Card>
+        </CardActions>
+      </Card>
+    </Link>
   );
 };
 
 export default TaskCard;
+
+const getTaskBgColor = (task: Task) => {
+  if (
+    !isFutureDate(task.dueDate) &&
+    [STATUS.PENDING, STATUS.IN_PROGRESS].includes(task.status) &&
+    task.dueDate
+  ) {
+    return "#ff9999";
+  }
+  return "inherit";
+};
+
+const getHoverColor = (task: Task) => {
+  if (
+    !isFutureDate(task.dueDate) &&
+    [STATUS.PENDING, STATUS.IN_PROGRESS].includes(task.status) &&
+    task.dueDate
+  ) {
+    return "#ff6666";
+  }
+  return "#e6e6e6";
+};
