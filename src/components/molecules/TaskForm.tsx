@@ -1,35 +1,31 @@
 import { Box, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigate } from "react-router";
 import Button from "src/components/atoms/Button";
-import { useCreateTask } from "src/hooks/useTask";
-import { CreateTaskInput, Task } from "src/types/task";
+import { TaskInput, Task } from "src/types/task";
+import { formatDate } from "src/utils/format-date";
 
 type TaskFormProps = {
-  handleClose: () => void;
+  onSubmit: (formData: TaskInput) => void;
+  isPending: boolean;
+  buttonLabel: string;
+  task?: Task;
 };
 
-const TaskForm = ({ handleClose }: TaskFormProps) => {
-  const navigate = useNavigate();
-
-  const { mutate, isPending } = useCreateTask();
-  const { handleSubmit, control } = useForm<CreateTaskInput>({
+const TaskForm = ({
+  onSubmit,
+  isPending,
+  buttonLabel,
+  task,
+}: TaskFormProps) => {
+  const { handleSubmit, control } = useForm<TaskInput>({
     defaultValues: {
-      title: "",
-      description: undefined,
-      dueDate: undefined,
+      title: task?.title || "",
+      description: task?.description || undefined,
+      dueDate: task?.dueDate
+        ? formatDate(task.dueDate, "YYYY-MM-DDTHH:mm")
+        : undefined,
     },
   });
-
-  const onSubmit = (formData: CreateTaskInput) => {
-    mutate(formData, {
-      onSuccess: (data) => {
-        const { createTask } = data as { createTask: Task };
-        handleClose();
-        navigate(`/${createTask.id}`);
-      },
-    });
-  };
 
   return (
     <Box
@@ -76,7 +72,7 @@ const TaskForm = ({ handleClose }: TaskFormProps) => {
       />
 
       <Button type="submit" disabled={isPending}>
-        {isPending ? "Creating..." : "Create Task"}
+        {buttonLabel}
       </Button>
     </Box>
   );

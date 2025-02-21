@@ -1,25 +1,30 @@
-import { Box, Modal, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import Button from "src/components/atoms/Button";
+import Modal from "src/components/molecules/Modal";
 import TaskForm from "src/components/molecules/TaskForm";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  maxWidth: 500,
-  bgcolor: "background.paper",
-  border: "1px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { useCreateTask } from "src/hooks/useTask";
+import { Task, TaskInput } from "src/types/task";
 
 const AddTask = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const navigate = useNavigate();
+
+  const { mutate, isPending } = useCreateTask();
+
+  const onSubmit = (formData: TaskInput) => {
+    mutate(formData, {
+      onSuccess: (data) => {
+        const { createTask } = data as { createTask: Task };
+        handleClose();
+        navigate(`/${createTask.id}`);
+      },
+    });
+  };
 
   return (
     <Box>
@@ -34,23 +39,20 @@ const AddTask = () => {
       >
         Add Task
       </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography
-            id="modal-modal-title"
-            variant="h6"
-            component="h2"
-            sx={{ textAlign: "center", pb: 2 }}
-          >
-            Add Task
-          </Typography>
-          <TaskForm handleClose={handleClose} />
-        </Box>
+      <Modal open={open} handleClose={handleClose}>
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          sx={{ textAlign: "center", pb: 2 }}
+        >
+          Add Task
+        </Typography>
+        <TaskForm
+          onSubmit={onSubmit}
+          isPending={isPending}
+          buttonLabel="Create Task"
+        />
       </Modal>
     </Box>
   );
