@@ -2,10 +2,10 @@ import { Box } from "@mui/material";
 import Timestamp from "src/components/atoms/Timestamp";
 import { isAfter } from "src/utils/format-date";
 
-interface TaskTimestampsProps {
+type TaskTimestampsProps = {
   createdAt: string;
   updatedAt: string;
-}
+};
 
 const TaskTimestamps = ({ createdAt, updatedAt }: TaskTimestampsProps) => (
   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
