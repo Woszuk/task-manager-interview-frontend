@@ -1,26 +1,39 @@
-import { Container, Box, Typography } from "@mui/material";
-import Task from "src/components/organisms/Task";
+import { Container, Box } from "@mui/material";
+import Error from "src/components/atoms/Error";
+import Loading from "src/components/atoms/Loading";
+import TaskColumn from "src/components/organisms/TasksColumn";
+import { useTasks } from "src/hooks/useTask";
 import { STATUS } from "src/types/task";
 import { formatText } from "src/utils/format-string";
 
 const TaskBoard = () => {
+  const { data, isLoading, error } = useTasks();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
   return (
-    <Container
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        maxWidth: "1440px",
-      }}
-    >
-      <Typography variant="h4" gutterBottom>
-        Task Manager
-      </Typography>
+    <Container>
       <Box
-        sx={{ display: "flex", width: "100%", justifyContent: "space-between" }}
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
       >
-        {Object.entries(STATUS).map(([status, label]) => (
-          <Task status={status} label={formatText(label)} key={status} />
+        {Object.entries(STATUS).map(([status, label], index) => (
+          <TaskColumn
+            data={data}
+            status={status}
+            label={formatText(label)}
+            index={index}
+            key={status}
+          />
         ))}
       </Box>
     </Container>
