@@ -30,16 +30,7 @@ const UpdateTask = ({ task }: UpdateTaskProps) => {
 
   return (
     <Box>
-      <Button
-        sx={{
-          position: "absolute",
-          right: 10,
-          top: 10,
-        }}
-        onClick={handleOpen}
-      >
-        Update
-      </Button>
+      <Button onClick={handleOpen}>Update</Button>
       <Modal open={open} handleClose={handleClose}>
         <Typography
           id="modal-modal-title"

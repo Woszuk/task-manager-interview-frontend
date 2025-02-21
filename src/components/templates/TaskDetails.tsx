@@ -9,6 +9,7 @@ import TaskTimestamps from "src/components/molecules/TaskTimestamp";
 import { formatText } from "src/utils/format-string";
 import BackToBoard from "src/components/molecules/BackToBoard";
 import UpdateTask from "src/components/organisms/UpdateTask";
+import DeleteTask from "src/components/organisms/DeleteTask";
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -30,13 +31,19 @@ const TaskDetails = () => {
           border: "1px solid black",
           position: "relative",
           p: 3,
-          pt: 7,
         }}
       >
-        <BackToBoard />
         {data ? (
           <Box sx={{ width: "100%" }}>
-            <UpdateTask task={data.task} />
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
+            >
+              <BackToBoard />
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <UpdateTask task={data.task} />
+                <DeleteTask id={data.task.id} />
+              </Box>
+            </Box>
 
             <Box sx={{ width: "max-content", mb: 4 }}>
               <Typography variant="h6" sx={{ pr: 3, pb: 1 }}>

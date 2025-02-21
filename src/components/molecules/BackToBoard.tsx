@@ -8,11 +8,8 @@ const BackToBoard = () => {
   return (
     <Box
       sx={{
-        position: "absolute",
         display: "flex",
         alignItems: "center",
-        left: 10,
-        top: 10,
         cursor: "pointer",
       }}
       onClick={() => navigate("/")}
