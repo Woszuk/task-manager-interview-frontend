@@ -8,6 +8,7 @@ import { formatDate } from "src/utils/format-date";
 import TaskTimestamps from "src/components/molecules/TaskTimestamp";
 import { formatText } from "src/utils/format-string";
 import BackToBoard from "src/components/molecules/BackToBoard";
+import UpdateTask from "src/components/organisms/UpdateTask";
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -35,6 +36,8 @@ const TaskDetails = () => {
         <BackToBoard />
         {data ? (
           <Box sx={{ width: "100%" }}>
+            <UpdateTask task={data.task} />
+
             <Box sx={{ width: "max-content", mb: 4 }}>
               <Typography variant="h6" sx={{ pr: 3, pb: 1 }}>
                 Status: {formatText(data.task.status)}
@@ -52,6 +55,7 @@ const TaskDetails = () => {
                 </Typography>
               )}
             </Box>
+
             {data.task.description && (
               <Box>
                 <Typography variant="h5" sx={{ whiteSpace: "pre-line" }}>
@@ -62,6 +66,7 @@ const TaskDetails = () => {
                 </Typography>
               </Box>
             )}
+
             <Divider sx={{ bgcolor: "black", mt: 4 }} />
             <TaskTimestamps
               createdAt={data.task.createdAt}
