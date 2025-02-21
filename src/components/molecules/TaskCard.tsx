@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { STATUS, Task } from "src/types/task";
 import { formatDate, isFutureDate } from "src/utils/format-date";
 import Warning from "src/components/atoms/Warning";
+import Timestamp from "src/components/atoms/Timestamp";
 
 type TaskCardProps = {
   task: Task;
@@ -21,7 +22,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
           cursor: "pointer",
           position: "relative",
           marginBottom: 2,
-          width: "max-content",
+          width: "100%",
           borderRadius: "10px",
           ":hover": {
             bgcolor: "#e6e6e6",
@@ -34,15 +35,17 @@ const TaskCard = ({ task }: TaskCardProps) => {
           {shouldDisplayWarning && <Warning />}
           <Typography variant="h5">{task.title}</Typography>
           {task.dueDate && (
-            <Typography sx={{ fontSize: "13px" }}>
+            <Typography sx={{ fontSize: "13px", mt: 2 }}>
               Due: {formatDate(task.dueDate)}
             </Typography>
           )}
         </CardContent>
         <CardActions>
-          <Typography variant="caption">
-            Created at: {formatDate(task.createdAt)}
-          </Typography>
+          <Timestamp
+            variant="caption"
+            label="Created at"
+            date={task.createdAt}
+          />
         </CardActions>
       </Card>
     </Link>

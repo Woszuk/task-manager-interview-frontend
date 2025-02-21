@@ -1,13 +1,13 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 import { formatDate } from "src/utils/format-date";
 
-interface TimestampProps {
+type TimestampProps = TypographyProps & {
   label: string;
   date: string;
-}
+};
 
-const Timestamp = ({ label, date }: TimestampProps) => (
-  <Typography sx={{ pt: 2 }}>
+const Timestamp = ({ label, date, ...props }: TimestampProps) => (
+  <Typography sx={{ pt: 2 }} {...props}>
     {label}: {formatDate(date)}
   </Typography>
 );

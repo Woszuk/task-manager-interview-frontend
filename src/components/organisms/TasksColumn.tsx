@@ -32,10 +32,13 @@ const TaskColumn = ({ data, label, status, index }: TaskProps) => {
       >
         {label}
       </Typography>
-      {data &&
-        data.tasks
-          .filter((task) => task.status === status)
-          .map((task) => <TaskCard task={task} key={task.id} />)}
+
+      <Box sx={{ overflow: "auto", maxHeight: 700, px: 1 }}>
+        {data &&
+          data.tasks
+            .filter((task) => task.status === status)
+            .map((task) => <TaskCard task={task} key={task.id} />)}
+      </Box>
     </Box>
   );
 };

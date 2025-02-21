@@ -22,7 +22,7 @@ const TaskBoard = () => {
       <Box
         sx={{
           display: "flex",
-          width: "100%",
+          flex: 1,
           justifyContent: "space-between",
         }}
       >

@@ -1,6 +1,5 @@
 import { Container, Box, Typography, Divider } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useParams } from "react-router";
 
 import { useTask } from "src/hooks/useTask";
 import Loading from "src/components/atoms/Loading";
@@ -8,11 +7,11 @@ import Error from "src/components/atoms/Error";
 import { formatDate } from "src/utils/format-date";
 import TaskTimestamps from "src/components/molecules/TaskTimestamp";
 import { formatText } from "src/utils/format-string";
+import BackToBoard from "src/components/molecules/BackToBoard";
 
 const TaskDetails = () => {
   const { id } = useParams();
   const { data, isLoading, error } = useTask(id);
-  const navigate = useNavigate();
 
   if (isLoading) {
     return <Loading />;
@@ -33,24 +32,7 @@ const TaskDetails = () => {
           pt: 7,
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            left: 10,
-            top: 10,
-            cursor: "pointer",
-          }}
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIcon
-            sx={{
-              fontSize: "30px",
-            }}
-          />
-          <Typography sx={{ pl: 1, fontSize: "20px" }}>Back</Typography>
-        </Box>
+        <BackToBoard />
         {data ? (
           <Box sx={{ width: "100%" }}>
             <Box sx={{ width: "max-content", mb: 4 }}>
@@ -71,9 +53,14 @@ const TaskDetails = () => {
               )}
             </Box>
             {data.task.description && (
-              <Typography variant="h5">
-                Description: {data.task.title}
-              </Typography>
+              <Box>
+                <Typography variant="h5" sx={{ whiteSpace: "pre-line" }}>
+                  Description:
+                </Typography>
+                <Typography variant="h6" sx={{ whiteSpace: "pre-line" }}>
+                  {data.task.description}
+                </Typography>
+              </Box>
             )}
             <Divider sx={{ bgcolor: "black", mt: 4 }} />
             <TaskTimestamps
