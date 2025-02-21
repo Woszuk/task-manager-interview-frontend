@@ -4,11 +4,14 @@ export const CREATE_TASK = gql`
   mutation Task($data: CreateTaskInput!) {
     createTask(data: $data) {
       id
-      title
-      status
-      dueDate
-      description
-      createdAt
+    }
+  }
+`;
+
+export const UPDATE_TASK = gql`
+  mutation Task($id: String!, $data: UpdateTaskInput!) {
+    updateTask(id: $id, data: $data) {
+      id
     }
   }
 `;
