@@ -14,3 +14,5 @@ export type Task = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type CreateTaskInput = Pick<Task, "title" | "description" | "dueDate">;
