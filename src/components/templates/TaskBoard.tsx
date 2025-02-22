@@ -1,4 +1,4 @@
-import { Container, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Error from "src/components/atoms/Error";
 import Loading from "src/components/atoms/Loading";
 import TaskColumn from "src/components/organisms/TasksColumn";
@@ -18,25 +18,24 @@ const TaskBoard = () => {
   }
 
   return (
-    <Container>
-      <Box
-        sx={{
-          display: "flex",
-          flex: 1,
-          justifyContent: "space-between",
-        }}
-      >
-        {Object.entries(STATUS).map(([status, label], index) => (
-          <TaskColumn
-            data={data}
-            status={status}
-            label={formatText(label)}
-            index={index}
-            key={status}
-          />
-        ))}
-      </Box>
-    </Container>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        flex: 1,
+        justifyContent: "space-between",
+      }}
+    >
+      {Object.entries(STATUS).map(([status, label], index) => (
+        <TaskColumn
+          data={data}
+          status={status}
+          label={formatText(label)}
+          index={index}
+          key={status}
+        />
+      ))}
+    </Box>
   );
 };
 

@@ -28,17 +28,7 @@ const AddTask = () => {
 
   return (
     <Box>
-      <Button
-        sx={{
-          position: "absolute",
-          transform: "translate(50%, -50%)",
-          top: "50%",
-          right: "25%",
-        }}
-        onClick={handleOpen}
-      >
-        Add Task
-      </Button>
+      <Button onClick={handleOpen}>Add Task</Button>
       <Modal open={open} handleClose={handleClose}>
         <Typography
           id="modal-modal-title"
