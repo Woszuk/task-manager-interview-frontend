@@ -1,18 +1,5 @@
 import { Box, Modal as MuiModal } from "@mui/material";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "100%",
-  maxWidth: 500,
-  bgcolor: "background.paper",
-  border: "1px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 type ModalProps = {
   children: React.ReactNode;
   open: boolean;
@@ -26,8 +13,28 @@ const Modal = ({ open, handleClose, children }: ModalProps) => {
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      disableScrollLock
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
-      <Box sx={style}>{children}</Box>
+      <Box
+        sx={{
+          width: "100vw",
+          maxWidth: 500,
+          maxHeight: "90vh",
+          bgcolor: "background.paper",
+          border: "1px solid #000",
+          boxShadow: 24,
+          p: { xs: 2, lg: 4 },
+          mx: { xs: 2, lg: "initial" },
+          overflow: "auto",
+        }}
+      >
+        {children}
+      </Box>
     </MuiModal>
   );
 };
