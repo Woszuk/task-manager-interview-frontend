@@ -11,6 +11,7 @@ import BackToBoard from "src/components/molecules/BackToBoard";
 import UpdateTask from "src/components/molecules/UpdateTask";
 import DeleteTask from "src/components/molecules/DeleteTask";
 import Button from "src/components/atoms/Button";
+import Detail from "src/components/atoms/Detail";
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -25,17 +26,9 @@ const TaskDetails = () => {
   }
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        border: "1px solid black",
-        position: "relative",
-        p: 3,
-      }}
-    >
+    <Box sx={{ width: "100%" }}>
       {data ? (
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ border: "1px solid black", p: 3 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <BackToBoard />
             <Box sx={{ display: "flex", gap: 1 }}>
@@ -53,24 +46,29 @@ const TaskDetails = () => {
             <Divider sx={{ bgcolor: "black" }} />
           </Box>
 
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Typography variant="h5">Title: {data.task.title}</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mb: 2,
+              flexDirection: { xs: "column", md: "row" },
+              gap: 1,
+            }}
+          >
+            <Detail label="Title" value={data.task.title} />
             {data.task.dueDate && (
-              <Typography variant="h6">
-                Due: {formatDate(data.task.dueDate)}
-              </Typography>
+              <Detail label="Due" value={formatDate(data.task.dueDate)} />
             )}
           </Box>
+          <Divider sx={{ bgcolor: "black", my: 2 }} />
 
           {data.task.description && (
-            <Box>
-              <Typography variant="h5" sx={{ whiteSpace: "pre-line" }}>
-                Description:
-              </Typography>
-              <Typography variant="h6" sx={{ whiteSpace: "pre-line" }}>
-                {data.task.description}
-              </Typography>
-            </Box>
+            <Detail
+              label="Description"
+              value={data.task.description}
+              preLine
+              sx={{ flexDirection: "column" }}
+            />
           )}
 
           <Divider sx={{ bgcolor: "black", mt: 4 }} />
