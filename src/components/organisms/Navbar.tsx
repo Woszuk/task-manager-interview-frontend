@@ -9,19 +9,20 @@ const Navbar = () => {
         my: 3,
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
       }}
     >
       <Typography
         variant="h4"
         sx={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
+          position: { md: "initial", lg: "absolute" },
+          left: { md: "initial", lg: "50%" },
+          transform: { md: "initial", lg: "translateX(-50%)" },
         }}
       >
         Task Manager
       </Typography>
-      <Box sx={{ marginLeft: "auto" }}>
+      <Box sx={{ marginLeft: { md: "initial", lg: "auto" } }}>
         <AddTask />
       </Box>
     </Box>

@@ -8,7 +8,13 @@ type TaskTimestampsProps = {
 };
 
 const TaskTimestamps = ({ createdAt, updatedAt }: TaskTimestampsProps) => (
-  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: { sm: "space-between" },
+      flexDirection: { xs: "column", sm: "row" },
+    }}
+  >
     <Timestamp label="Created at" date={createdAt} />
     {isAfter(updatedAt, createdAt) && (
       <Timestamp label="Updated at" date={updatedAt} />

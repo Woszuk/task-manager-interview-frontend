@@ -24,6 +24,7 @@ const TaskBoard = () => {
         width: "100%",
         flex: 1,
         justifyContent: "space-between",
+        overflow: "auto",
       }}
     >
       {Object.entries(STATUS).map(([status, label], index) => (

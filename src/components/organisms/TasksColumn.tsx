@@ -2,6 +2,8 @@ import { Typography, Box } from "@mui/material";
 import TaskCard from "src/components/molecules/TaskCard";
 import { Task } from "src/types/task";
 
+const NAVBAR_HEIGHT = "112px";
+
 type TaskProps = {
   data?: { tasks: Task[] };
   label: string;
@@ -18,6 +20,7 @@ const TaskColumn = ({ data, label, status, index }: TaskProps) => {
         alignItems: "center",
         width: "100%",
         borderRight: index < 3 ? "1px solid black" : "none",
+        maxHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
       }}
     >
       <Typography
@@ -33,7 +36,13 @@ const TaskColumn = ({ data, label, status, index }: TaskProps) => {
         {label}
       </Typography>
 
-      <Box sx={{ overflow: "auto", maxHeight: 700, px: 1, width: "250px" }}>
+      <Box
+        sx={{
+          overflow: "auto",
+          px: 1,
+          width: "250px",
+        }}
+      >
         {data &&
           data.tasks
             .filter((task) => task.status === status)

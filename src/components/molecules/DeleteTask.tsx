@@ -48,8 +48,11 @@ const DeleteTask = ({ id, children }: DeleteTaskProps) => {
             autoFocus
             sx={{
               ":focus": {
-                bgcolor: "rgba(211, 47, 47, 0.04)",
-                borderColor: "#d32f2f",
+                xs: "initial",
+                lg: {
+                  bgcolor: "rgba(211, 47, 47, 0.04)",
+                  borderColor: "#d32f2f",
+                },
               },
             }}
           >
