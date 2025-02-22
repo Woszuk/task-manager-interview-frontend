@@ -10,6 +10,7 @@ import { formatText } from "src/utils/format-string";
 import BackToBoard from "src/components/molecules/BackToBoard";
 import UpdateTask from "src/components/molecules/UpdateTask";
 import DeleteTask from "src/components/molecules/DeleteTask";
+import Button from "src/components/atoms/Button";
 
 const TaskDetails = () => {
   const { id } = useParams();
@@ -39,7 +40,9 @@ const TaskDetails = () => {
             <BackToBoard />
             <Box sx={{ display: "flex", gap: 1 }}>
               <UpdateTask task={data.task} />
-              <DeleteTask id={data.task.id} />
+              <DeleteTask id={data.task.id}>
+                <Button color="error">Delete</Button>
+              </DeleteTask>
             </Box>
           </Box>
 

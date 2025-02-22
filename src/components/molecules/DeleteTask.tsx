@@ -7,9 +7,10 @@ import { useDeleteTask } from "src/hooks/useTask";
 
 type DeleteTaskProps = {
   id: string;
+  children: React.ReactNode;
 };
 
-const DeleteTask = ({ id }: DeleteTaskProps) => {
+const DeleteTask = ({ id, children }: DeleteTaskProps) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -29,9 +30,7 @@ const DeleteTask = ({ id }: DeleteTaskProps) => {
 
   return (
     <Box>
-      <Button color="error" onClick={handleOpen}>
-        Delete
-      </Button>
+      <Box onClick={handleOpen}>{children}</Box>
       <Modal open={open} handleClose={handleClose}>
         <Typography
           id="modal-modal-title"
@@ -42,7 +41,18 @@ const DeleteTask = ({ id }: DeleteTaskProps) => {
           Are you sure you want to delete this task?
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center", gap: 4 }}>
-          <Button onClick={onSubmit} size="large" color="error">
+          <Button
+            onClick={onSubmit}
+            size="large"
+            color="error"
+            autoFocus
+            sx={{
+              ":focus": {
+                bgcolor: "rgba(211, 47, 47, 0.04)",
+                borderColor: "#d32f2f",
+              },
+            }}
+          >
             Yes
           </Button>
           <Button onClick={handleClose} size="large">
