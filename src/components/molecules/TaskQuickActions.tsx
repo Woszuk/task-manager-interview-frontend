@@ -1,6 +1,8 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box, Divider, Menu, MenuItem, Typography } from "@mui/material";
 import React, { useState } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteTask from "src/components/molecules/DeleteTask";
 import { useUpdateTaskStatus } from "src/hooks/useTask";
 import { STATUS } from "src/types/task";
@@ -39,7 +41,7 @@ const TaskQuickAction = ({ status, id }: TaskQuickActionsProps) => {
       sx={{ position: "absolute", right: 5, top: 5 }}
     >
       <Box onClick={handleClick}>
-        <MoreVertIcon />
+        <MoreVertIcon sx={{ fontSize: "20px" }} />
       </Box>
       <Menu
         id="basic-menu"
@@ -58,15 +60,31 @@ const TaskQuickAction = ({ status, id }: TaskQuickActionsProps) => {
           horizontal: "center",
         }}
       >
-        <Typography sx={{ textAlign: "center", mb: 1 }}>Move to</Typography>
-        <Divider />
-        {Object.values(STATUS)
-          .filter((value) => value != status)
-          .map((value) => (
-            <MenuItem key={value} onClick={() => handleStatus(value)}>
-              {formatText(value)}
-            </MenuItem>
-          ))}
+        <Typography sx={{ mb: "2px", pl: 2, fontWeight: "bold" }}>
+          Move to:
+        </Typography>
+        {Object.values(STATUS).map((value, index) => {
+          const skipStatusIndex = Object.values(STATUS).findIndex(
+            (value) => value === status
+          );
+          return (
+            skipStatusIndex != index && (
+              <MenuItem
+                key={value}
+                onClick={() => handleStatus(value)}
+                sx={{ gap: 1 }}
+              >
+                {index < skipStatusIndex && (
+                  <ArrowBackIcon sx={{ fontSize: "20px" }} />
+                )}
+                {formatText(value)}
+                {index > skipStatusIndex && (
+                  <ArrowForwardIcon sx={{ fontSize: "20px" }} />
+                )}
+              </MenuItem>
+            )
+          );
+        })}
         <Divider />
         <DeleteTask id={id}>
           <MenuItem sx={{ color: "#ff6666" }}>Delete</MenuItem>
