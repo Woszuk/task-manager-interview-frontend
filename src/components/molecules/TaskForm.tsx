@@ -1,8 +1,12 @@
 import { Box, MenuItem, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
 import Button from "src/components/atoms/Button";
 import { TaskInput, Task, STATUS } from "src/types/task";
-import { formatDate } from "src/utils/format-date";
 import { formatText } from "src/utils/format-string";
 
 type TaskFormProps = {
@@ -22,9 +26,7 @@ const TaskForm = ({
     defaultValues: {
       title: task?.title || "",
       description: task?.description || undefined,
-      dueDate: task?.dueDate
-        ? formatDate(task.dueDate, "YYYY-MM-DDTHH:mm")
-        : undefined,
+      dueDate: task?.dueDate ? dayjs(task.dueDate) : undefined,
       status: task?.status || STATUS.PENDING,
     },
   });
@@ -64,12 +66,9 @@ const TaskForm = ({
         name="dueDate"
         control={control}
         render={({ field }) => (
-          <TextField
-            {...field}
-            label="Due Date"
-            type="datetime-local"
-            slotProps={{ inputLabel: { shrink: true } }}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateTimePicker {...field} />
+          </LocalizationProvider>
         )}
       />
 

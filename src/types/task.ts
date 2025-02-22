@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs";
+
 export enum STATUS {
   PENDING = "PENDING",
   IN_PROGRESS = "IN_PROGRESS",
@@ -15,7 +17,9 @@ export type Task = {
   updatedAt: string;
 };
 
-export type TaskInput = Pick<
-  Task,
-  "title" | "description" | "dueDate" | "status"
->;
+export type TaskInput = {
+  title: string;
+  description: string;
+  dueDate: Dayjs;
+  status: STATUS;
+};
