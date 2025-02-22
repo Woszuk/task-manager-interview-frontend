@@ -7,7 +7,7 @@ const Warning = () => {
         position: "absolute",
         color: "#ff6666",
         top: 4,
-        right: 4,
+        left: 4,
       }}
     />
   );

@@ -33,7 +33,7 @@ const TaskColumn = ({ data, label, status, index }: TaskProps) => {
         {label}
       </Typography>
 
-      <Box sx={{ overflow: "auto", maxHeight: 700, px: 1 }}>
+      <Box sx={{ overflow: "auto", maxHeight: 700, px: 1, width: "250px" }}>
         {data &&
           data.tasks
             .filter((task) => task.status === status)
