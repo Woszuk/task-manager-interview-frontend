@@ -1,12 +1,16 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import Button from "src/components/atoms/Button";
 import Modal from "src/components/molecules/Modal";
 import TaskForm from "src/components/molecules/TaskForm";
 import { useCreateTask } from "src/hooks/useTask";
-import { TaskInput } from "src/types/task";
+import { Task, TaskInput } from "src/types/task";
 
 const AddTask = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -15,7 +19,11 @@ const AddTask = () => {
 
   const onSubmit = (formData: TaskInput) => {
     mutate(formData, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        if (pathname !== "/") {
+          const { createTask } = data as { createTask: Task };
+          navigate(`/${createTask.id}`);
+        }
         handleClose();
       },
     });
