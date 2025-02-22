@@ -26,9 +26,8 @@ export const useCreateTask = () => {
   return useMutation({
     mutationFn: async (data: TaskInput) =>
       client.request(CREATE_TASK, { data }),
-    onSuccess: (data) => {
-      const { createTask } = data as { createTask: Task };
-      queryClient.invalidateQueries({ queryKey: [`task${createTask.id}`] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`tasks`] });
     },
   });
 };
@@ -49,6 +48,22 @@ export const useDeleteTask = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => client.request(DELETE_TASK, { id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [`tasks`] });
+    },
+  });
+};
+
+export const useUpdateTaskStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: Pick<Task, "status">;
+    }) => client.request(UPDATE_TASK, { id, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
     },

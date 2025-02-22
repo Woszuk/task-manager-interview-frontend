@@ -4,6 +4,7 @@ import { STATUS, Task } from "src/types/task";
 import { formatDate, isFutureDate } from "src/utils/format-date";
 import Warning from "src/components/atoms/Warning";
 import Timestamp from "src/components/atoms/Timestamp";
+import TaskQuickAction from "src/components/molecules/TaskQuickActions";
 
 type TaskCardProps = {
   task: Task;
@@ -33,6 +34,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
       >
         <CardContent>
           {shouldDisplayWarning && <Warning />}
+          <TaskQuickAction status={task.status} id={task.id} />
           <Typography variant="h5">{task.title}</Typography>
           {task.dueDate && (
             <Typography sx={{ fontSize: "13px", mt: 2 }}>
