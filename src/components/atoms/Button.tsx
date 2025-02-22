@@ -7,9 +7,18 @@ type ButtonProps = MuiButtonProps & {
   children: React.ReactNode;
 };
 
-const Button = ({ children, ...props }: ButtonProps) => {
+const Button = ({ children, sx, ...props }: ButtonProps) => {
   return (
-    <MuiButton size="medium" variant="outlined" {...props}>
+    <MuiButton
+      size="medium"
+      variant="outlined"
+      sx={{
+        fontSize: { xs: "12px", lg: "14px" },
+        padding: { xs: "6px 12px", lg: "8px 16px" },
+        ...sx,
+      }}
+      {...props}
+    >
       {children}
     </MuiButton>
   );
