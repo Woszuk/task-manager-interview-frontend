@@ -6,7 +6,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import DeleteTask from "src/components/molecules/DeleteTask";
 import { useUpdateTaskStatus } from "src/hooks/useTask";
 import { STATUS } from "src/types/task";
-import { formatText } from "src/utils/format-string";
+import { removeUnderscore } from "src/utils/format-string";
 
 type TaskQuickActionsProps = {
   status: STATUS;
@@ -77,7 +77,7 @@ const TaskQuickAction = ({ status, id }: TaskQuickActionsProps) => {
                 {index < skipStatusIndex && (
                   <ArrowBackIcon sx={{ fontSize: "20px" }} />
                 )}
-                {formatText(value)}
+                {removeUnderscore(value)}
                 {index > skipStatusIndex && (
                   <ArrowForwardIcon sx={{ fontSize: "20px" }} />
                 )}

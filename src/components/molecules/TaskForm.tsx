@@ -7,7 +7,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 import Button from "src/components/atoms/Button";
 import { TaskInput, Task, STATUS } from "src/types/task";
-import { formatText } from "src/utils/format-string";
+import { removeUnderscore } from "src/utils/format-string";
 
 type TaskFormProps = {
   onSubmit: (formData: TaskInput) => void;
@@ -27,7 +27,7 @@ const TaskForm = ({
       title: task?.title || "",
       description: task?.description || undefined,
       dueDate: task?.dueDate ? dayjs(task.dueDate) : undefined,
-      status: task?.status || STATUS.PENDING,
+      status: task?.status || STATUS.TO_DO,
     },
   });
 
@@ -84,7 +84,7 @@ const TaskForm = ({
           >
             {Object.values(STATUS).map((value) => (
               <MenuItem value={value} key={value}>
-                {formatText(value)}
+                {removeUnderscore(value)}
               </MenuItem>
             ))}
           </TextField>

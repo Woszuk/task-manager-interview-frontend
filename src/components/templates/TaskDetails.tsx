@@ -6,7 +6,7 @@ import Loading from "src/components/atoms/Loading";
 import Error from "src/components/atoms/Error";
 import { formatDate } from "src/utils/format-date";
 import TaskTimestamps from "src/components/molecules/TaskTimestamp";
-import { formatText } from "src/utils/format-string";
+import { removeUnderscore } from "src/utils/format-string";
 import BackToBoard from "src/components/molecules/BackToBoard";
 import UpdateTask from "src/components/molecules/UpdateTask";
 import DeleteTask from "src/components/molecules/DeleteTask";
@@ -22,7 +22,7 @@ const TaskDetails = () => {
   }
 
   if (error) {
-    return <Error />;
+    return <Error error={error} />;
   }
 
   return (
@@ -41,7 +41,7 @@ const TaskDetails = () => {
 
           <Box sx={{ width: "max-content", mb: 4 }}>
             <Typography variant="h6" sx={{ pr: 3, pb: 1 }}>
-              Status: {formatText(data.task.status)}
+              Status: {removeUnderscore(data.task.status)}
             </Typography>
             <Divider sx={{ bgcolor: "black" }} />
           </Box>
@@ -60,15 +60,18 @@ const TaskDetails = () => {
               <Detail label="Due" value={formatDate(data.task.dueDate)} />
             )}
           </Box>
-          <Divider sx={{ bgcolor: "black", my: 2 }} />
 
           {data.task.description && (
-            <Detail
-              label="Description"
-              value={data.task.description}
-              preLine
-              sx={{ flexDirection: "column" }}
-            />
+            <Box>
+              <Divider sx={{ bgcolor: "black", my: 2 }} />
+
+              <Detail
+                label="Description"
+                value={data.task.description}
+                preLine
+                sx={{ flexDirection: "column" }}
+              />
+            </Box>
           )}
 
           <Divider sx={{ bgcolor: "black", mt: 4 }} />

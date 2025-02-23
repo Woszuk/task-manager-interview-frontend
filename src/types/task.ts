@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 
 export enum STATUS {
-  PENDING = "PENDING",
+  TO_DO = "TO_DO",
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
   CLOSED = "CLOSED",

@@ -1,10 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Error from "src/components/atoms/Error";
 import Loading from "src/components/atoms/Loading";
 import TaskColumn from "src/components/organisms/TasksColumn";
 import { useTasks } from "src/hooks/useTask";
 import { STATUS } from "src/types/task";
-import { formatText } from "src/utils/format-string";
+import { removeUnderscore } from "src/utils/format-string";
 
 const TaskBoard = () => {
   const { data, isLoading, error } = useTasks();
@@ -14,7 +14,7 @@ const TaskBoard = () => {
   }
 
   if (error) {
-    return <Error />;
+    return <Error error={error} />;
   }
 
   return (
@@ -23,19 +23,26 @@ const TaskBoard = () => {
         display: "flex",
         width: "100%",
         flex: 1,
-        justifyContent: "space-between",
         overflow: "auto",
       }}
     >
-      {Object.entries(STATUS).map(([status, label], index) => (
-        <TaskColumn
-          data={data}
-          status={status}
-          label={formatText(label)}
-          index={index}
-          key={status}
-        />
-      ))}
+      {data?.tasks.length ? (
+        <>
+          {Object.entries(STATUS).map(([status, label], index) => (
+            <TaskColumn
+              data={data}
+              status={status}
+              label={removeUnderscore(label)}
+              index={index}
+              key={status}
+            />
+          ))}
+        </>
+      ) : (
+        <Typography variant="h5" sx={{ margin: "auto" }}>
+          No tasks to display. Create some.
+        </Typography>
+      )}
     </Box>
   );
 };
