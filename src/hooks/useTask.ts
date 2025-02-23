@@ -30,6 +30,7 @@ export const useCreateTask = () => {
       client.request(CREATE_TASK, { data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
+      toast.success("Task was created");
     },
     onError: () => {
       toast.error("Failed to add task. Please try again later.");
@@ -50,6 +51,7 @@ export const useUpdateTask = () => {
     onSuccess: (data) => {
       const { updateTask } = data as { updateTask: Task };
       queryClient.invalidateQueries({ queryKey: [`task${updateTask.id}`] });
+      toast.success("Task was updated");
     },
     onError: () => {
       toast.error("Failed to update task. Please try again later.");
@@ -64,6 +66,7 @@ export const useDeleteTask = () => {
       client.request(DELETE_TASK, { params }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
+      toast.success("Task was deleted");
     },
     onError: () => {
       toast.error("Failed to delete task. Please try again later.");
@@ -83,6 +86,7 @@ export const useUpdateTaskStatus = () => {
     }) => client.request(UPDATE_TASK, { params, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
+      toast.success("Status of task has been changed");
     },
     onError: () => {
       toast.error("Failed to update status. Please try again later.");
