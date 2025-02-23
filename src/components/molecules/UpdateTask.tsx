@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import Button from "src/components/atoms/Button";
 import Modal from "src/components/molecules/Modal";
 import TaskForm from "src/components/molecules/TaskForm";
@@ -23,6 +24,9 @@ const UpdateTask = ({ task }: UpdateTaskProps) => {
       {
         onSuccess: () => {
           handleClose();
+        },
+        onError: () => {
+          toast.error("Failed to update task. Please try again later.");
         },
       }
     );

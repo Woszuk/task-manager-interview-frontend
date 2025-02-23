@@ -6,6 +6,7 @@ import Task from "src/components/pages/Task";
 import { Container } from "@mui/material";
 import Navbar from "src/components/organisms/Navbar";
 import ErrorBoundary from "src/components/ErrorBoundary";
+import { ToastContainer } from "react-toastify";
 
 const queryClient = new QueryClient();
 
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
+        <ToastContainer position="top-right" autoClose={3000} />
         <Container
           sx={{
             display: "flex",

@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import Button from "src/components/atoms/Button";
 import Modal from "src/components/molecules/Modal";
 import TaskForm from "src/components/molecules/TaskForm";
@@ -25,6 +26,9 @@ const AddTask = () => {
           navigate(`/${createTask.id}`);
         }
         handleClose();
+      },
+      onError: () => {
+        toast.error("Failed to add task. Please try again later.");
       },
     });
   };
