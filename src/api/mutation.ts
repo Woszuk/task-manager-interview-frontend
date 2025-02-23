@@ -9,16 +9,16 @@ export const CREATE_TASK = gql`
 `;
 
 export const UPDATE_TASK = gql`
-  mutation Task($id: String!, $data: UpdateTaskInput!) {
-    updateTask(id: $id, data: $data) {
+  mutation Task($params: IdInput!, $data: UpdateTaskInput!) {
+    updateTask(params: $params, data: $data) {
       id
     }
   }
 `;
 
 export const DELETE_TASK = gql`
-  mutation Task($id: String!) {
-    deleteTask(id: $id) {
+  mutation Task($params: IdInput!) {
+    deleteTask(params: $params) {
       id
     }
   }

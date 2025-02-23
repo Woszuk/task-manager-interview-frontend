@@ -31,7 +31,7 @@ const TaskQuickAction = ({ status, id }: TaskQuickActionsProps) => {
   };
 
   const handleStatus = (status: STATUS) => {
-    mutate({ id, data: { status } });
+    mutate({ params: { id }, data: { status } });
     handleClose();
   };
 

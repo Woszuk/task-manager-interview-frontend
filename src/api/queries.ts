@@ -13,8 +13,8 @@ export const GET_TASKS = gql`
 `;
 
 export const GET_TASK = gql`
-  query Task($id: String!) {
-    task(id: $id) {
+  query Task($params: IdInput!) {
+    task(params: $params) {
       id
       title
       description

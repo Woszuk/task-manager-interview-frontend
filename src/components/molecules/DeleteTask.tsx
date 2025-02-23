@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import Button from "src/components/atoms/Button";
 import Modal from "src/components/molecules/Modal";
 import { useDeleteTask } from "src/hooks/useTask";
@@ -21,16 +20,18 @@ const DeleteTask = ({ id, children }: DeleteTaskProps) => {
   const { mutate } = useDeleteTask();
 
   const onSubmit = () => {
-    mutate(id, {
-      onSuccess: () => {
-        handleClose();
-        navigate("/");
-      },
-      onError: () => {
-        toast.error("Failed to delete task. Please try again later.");
-        handleClose();
-      },
-    });
+    mutate(
+      { id },
+      {
+        onSuccess: () => {
+          handleClose();
+          navigate("/");
+        },
+        onError: () => {
+          handleClose();
+        },
+      }
+    );
   };
 
   return (

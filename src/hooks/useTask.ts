@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ClientError } from "graphql-request";
+import { toast } from "react-toastify";
 import client from "src/api/graphql-client";
 import { CREATE_TASK, DELETE_TASK, UPDATE_TASK } from "src/api/mutation";
 import { GET_TASK, GET_TASKS } from "src/api/queries";
@@ -16,7 +17,7 @@ export const useTasks = () => {
 export const useTask = (id?: string) => {
   return useQuery<{ task: Task }, ClientError>({
     queryKey: [`task${id}`],
-    queryFn: async () => client.request(GET_TASK, { id }),
+    queryFn: async () => client.request(GET_TASK, { params: { id } }),
     enabled: !!id,
     retry: false,
   });
@@ -30,17 +31,28 @@ export const useCreateTask = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
     },
+    onError: () => {
+      toast.error("Failed to add task. Please try again later.");
+    },
   });
 };
 
 export const useUpdateTask = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, data }: { id: string; data: TaskInput }) =>
-      client.request(UPDATE_TASK, { id, data }),
+    mutationFn: async ({
+      params,
+      data,
+    }: {
+      params: { id: string };
+      data: TaskInput;
+    }) => client.request(UPDATE_TASK, { params, data }),
     onSuccess: (data) => {
       const { updateTask } = data as { updateTask: Task };
       queryClient.invalidateQueries({ queryKey: [`task${updateTask.id}`] });
+    },
+    onError: () => {
+      toast.error("Failed to update task. Please try again later.");
     },
   });
 };
@@ -48,9 +60,13 @@ export const useUpdateTask = () => {
 export const useDeleteTask = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (id: string) => client.request(DELETE_TASK, { id }),
+    mutationFn: async (params: { id: string }) =>
+      client.request(DELETE_TASK, { params }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
+    },
+    onError: () => {
+      toast.error("Failed to delete task. Please try again later.");
     },
   });
 };
@@ -59,14 +75,17 @@ export const useUpdateTaskStatus = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({
-      id,
+      params,
       data,
     }: {
-      id: string;
+      params: { id: string };
       data: Pick<Task, "status">;
-    }) => client.request(UPDATE_TASK, { id, data }),
+    }) => client.request(UPDATE_TASK, { params, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`tasks`] });
+    },
+    onError: () => {
+      toast.error("Failed to update status. Please try again later.");
     },
   });
 };
